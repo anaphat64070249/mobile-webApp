@@ -7,8 +7,8 @@ router.get("/dash", async (req,res,next) => {
 
     try{
 
-        const [user_all] = await pool.query("select count(emp_id) as a from Employee")
-        const [com_all] = await pool.query("select count(com_id) as a from Company")
+        const [user_all] = await pool.query("select count(emp_id) as a from Employee where user_status = 1 or user_status = 0")
+        const [com_all] = await pool.query("select count(com_id) as a from Company where user_status = 1 or user_status = 0")
         const [job_all] = await pool.query("select count(job_id) as a from Jobs")
 
 

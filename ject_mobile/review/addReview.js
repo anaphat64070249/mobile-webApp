@@ -4,6 +4,9 @@ const router = express.Router();
 
 router.post("/addreview", async (req,res,next) => {
 
+    const conn = await pool.getConnection()
+    conn.beginTransaction()
+
     const id = req.body.id;
     const reviewer = req.body.reviewer;
     const score = req.body.score;
@@ -18,11 +21,25 @@ router.post("/addreview", async (req,res,next) => {
 
         // const [row] = await pool.query("ALTER TABLE Reviews DROP primary key")
         
-        const [row4,fields] = await pool.query("insert into Reviews(emp_id,job_id,reviewer_name,score,comments,report,reviewer) values (?,?,?,?,?,?,'com')",[id,work_id,reviewer,score,comm,report])
+        const [row4,fields] = await conn.query("insert into Reviews(emp_id,job_id,reviewer_name,score,comments,report,reviewer) values (?,?,?,?,?,?,'com')",[id,work_id,reviewer,score,comm,report])
+        const [row] = await conn.query("select count(emp_id) as a,sum(score) as s from Reviews where emp_id = ?",[id])
+        const avg1 = Number(row[0].a)+1
+        const avg2 = Number(row[0].s)+Number(score)
 
+        const avg = Number(avg2/avg1)
+
+        const [update] = await conn.query("update Personal_infomations set avg_score = round(?,2) where emp_id =?",[avg,id])
+
+
+
+        
+        conn.commit()
     }
     catch(err){
+        conn.rollback()
         console.log(err);
+    }finally{
+        conn.release()
     }
 
 })

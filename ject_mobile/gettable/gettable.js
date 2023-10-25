@@ -9,7 +9,6 @@ router.post("/gettable", async (req,res,next) => {
     if (check == 1){
         //สมาชิกหางาน
         const [row,fields] = await pool.query("select * from Employee join Personal_infomations using(emp_id) where user_status = 1")
-        console.log(row);
         res.json({dat:row})
     }
     else if(check == 2){
@@ -19,7 +18,7 @@ router.post("/gettable", async (req,res,next) => {
     }
     else if (check == 3){
         //สมัครหางาน
-        const [row,fields] = await pool.query("select * from Employee join Personal_infomations using(emp_id) where user_status = 1")
+        const [row,fields] = await pool.query("select * from Employee join Personal_infomations using(emp_id) where user_status = 0")
         res.json({dat:row})
     }
     else if (check == 4){

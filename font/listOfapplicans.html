@@ -171,16 +171,21 @@
             logout() {
                 localStorage.setItem('id', '');
             },
-            async confirm(aaaa,bbbb){
-                this.check_click = 1;
+             confirm(aaaa,bbbb){
+                alert("ยืนยันสำเร็จ")
 
-                const con = await axios.put("http://localhost:3000/confirm",{a:aaaa,b:bbbb});
+                this.check_click = 1;
+                const con =  axios.put("http://localhost:3000/confirm",{a:aaaa,b:bbbb});
+                window.location.href="http://127.0.0.1:5500/font/main.html"
             },
-            async cancel(aaaa,bbbb){
+             cancel(aaaa,bbbb){
+                alert("ยกเลิกสำเร็จ")
                 this.check_click = 2;
-                const con = await axios.put("http://localhost:3000/cancel",{a:aaaa,b:bbbb});
+                const con =  axios.put("http://localhost:3000/cancel",{a:aaaa,b:bbbb});
+                window.location.href="http://127.0.0.1:5500/font/main.html"
             },
             async end(){
+                alert("จบงานแล้ว")
                 const end = await axios.put("http://localhost:3000/end",{work:this.work_id});
                 window.location.href= "http://127.0.0.1:5500/font/main.html";
             }

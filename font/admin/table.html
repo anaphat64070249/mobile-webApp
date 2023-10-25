@@ -41,11 +41,17 @@
                             <th>เบอร์โทร</th>
                             <th>อีเมล์</th>
                         </tr>
-                        <tr>
-                            <a href="./dashboard.html"><td>asd</td></a>
-                            <td>asd</td>
-                            <td>sad</td>
-                            <td>asdsa   </td>
+                        <tr v-for="item in data" :key="personal_infoID" v-if="check == 1 || check == 3">
+                            <td><a :href="'./detail.html?id='+item.emp_id+'&check='+check">{{item.emp_id}}</a></td>
+                            <td>{{item.firstName}} {{item.lastName}}</td>
+                            <td>{{item.phone}}</td>
+                            <td>{{item.email}}</td>
+                        </tr>
+                        <tr v-for="item in data" :key="com_id" v-if="check == 2 || check == 4">
+                            <td><a :href="'./detail.html?id='+item.com_id+'&check='+check">{{item.com_id}}</a></td>
+                            <td>{{item.companyName}} </td>
+                            <td>{{item.phone}}</td>
+                            <td>{{item.email}}</td>
                         </tr>
                     </table>
                 </div>

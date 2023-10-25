@@ -20,6 +20,10 @@ const addWork = require("./addwork/addwork")
 const register = require("./register/regis")
 const dashboard = require("./dashboard/dashboard")
 const table = require("./gettable/gettable")
+const detal = require("./detail/detail")
+const del = require("./del/delete")
+const con_can = require("./con_can/con_can")
+
 
 app.use(login.router)
 app.use(main.router)
@@ -34,5 +38,9 @@ app.use(addWork.router)
 app.use(register.router)
 app.use(dashboard.router)
 app.use(table.router)
+app.use(detal.router)
+app.use(del.router)
+app.use(con_can.router)
+
 
 app.listen(3000, () => {})
