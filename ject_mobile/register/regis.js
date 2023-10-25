@@ -35,34 +35,55 @@ var storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-router.post("/register3", async (req,res,next) => {
+router.post("/register3",upload.array("myImage",5), async (req,res,next) => {
   const conn = await pool.getConnection();
   conn.beginTransaction();
-
+  // console.log(req.files[0]);
+  // console.log(req.files[1]);
+  // console.log(req.body.email);
 
   //login
-  const email = req.body.data.email;
-  const phone = req.body.data.tel;
-  const pass = req.body.data.pass;
+  const email = req.body.email;
+  const phone = req.body.tel;
+  const pass = req.body.pass;
 
   // address
-  const district = req.body.data.amphur
-  const tumbon = req.body.data.tambon
-  const province = req.body.data.province
-  const zipcode = req.body.data.code
-  const address = req.body.data.address
+  const district = req.body.amphur
+  const tumbon = req.body.tambon
+  const province = req.body.province
+  const zipcode = req.body.code
+  const address = req.body.address
 
 
   //information
-  const name = req.body.data.name
-  const juristic_id = req.body.data.num
-  const bussines_type = req.body.data.type
-  const descriptions = req.body.data.about
-
-
-
+  const name = req.body.name
+  const juristic_id = req.body.num
+  const bussines_type = req.body.type
+  const descriptions = req.body.about
 
   try{
+        // img 1
+        bucket.upload(req.files[0].path)
+        const file = req.files[0].filename;
+        const options = {
+            version: 'v2',
+            action: 'read',
+            expires: Date.now() + 1000 * 60 * 60
+        }
+
+        const [Url] = await bucket.file(file).getSignedUrl(options);
+
+        // img 2
+        bucket.upload(req.files[1].path)
+        const file2 = req.files[1].filename;
+        const options2 = {
+            version: 'v2',
+            action: 'read',
+            expires: Date.now() + 1000 * 60 * 60
+        }
+ 
+        const [Url2] = await bucket.file(file2).getSignedUrl(options2);
+        
 
     //login
     const [row] = await conn.query("insert into Company(email,phone,user_status,password) values(?,?,0,?)", [email,phone,pass])
@@ -73,7 +94,7 @@ router.post("/register3", async (req,res,next) => {
     const id2 = row2.insertId
    
     //information
-    const [row3] = await conn.query("insert into Company_infomations(com_id,companyName,juristic_id,bussines_type,address_code,descriptions,avg_score) values(?,?,?,?,?,?,0)",[id,name,juristic_id,bussines_type,id2,descriptions])
+    const [row3] = await conn.query("insert into Company_infomations(com_id,companyName,juristic_id,image_juristic,bussines_type,address_code,descriptions,image_company,avg_score) values(?,?,?,?,?,?,?,?,0)",[id,name,juristic_id,Url,bussines_type,id2,descriptions,Url2])
     res.json({data:id})
     await conn.commit();
   }
@@ -85,73 +106,73 @@ router.post("/register3", async (req,res,next) => {
   }
 })
 
-router.post("/register",upload.array("myImage",5),async (req,res,next) => {
+// router.post("/register",upload.array("myImage",5),async (req,res,next) => {
 
-  const conn = await pool.getConnection();
-  conn.beginTransaction();
-  const id = req.body.id.data;
-     try{
-      console.log(id);
-        bucket.upload(req.files[0].path)
-        const file = req.files[0].filename;
-        const options = {
-            version: 'v2',
-            action: 'read',
-            expires: Date.now() + 1000 * 60 * 60
-        }
+//   const conn = await pool.getConnection();
+//   conn.beginTransaction();
+//   const id = req.body.id.data;
+//      try{
+//       console.log(id);
+        // bucket.upload(req.files[0].path)
+        // const file = req.files[0].filename;
+        // const options = {
+        //     version: 'v2',
+        //     action: 'read',
+        //     expires: Date.now() + 1000 * 60 * 60
+        // }
 
-        const [Url] = await bucket.file(file).getSignedUrl(options);
+        // const [Url] = await bucket.file(file).getSignedUrl(options);
         
-        // const [max] = await conn.query("select max(com_id) as max from Company")
-        // const max_x = max[0].max+1;
+//         // const [max] = await conn.query("select max(com_id) as max from Company")
+//         // const max_x = max[0].max+1;
 
-        const [row] = await conn.query("update Company_infomations set image_juristic = ? where com_id = ? ",[Url,id] )
+//         const [row] = await conn.query("update Company_infomations set image_juristic = ? where com_id = ? ",[Url,id] )
         
         
-      await conn.commit();
+//       await conn.commit();
 
-     }
-     catch(err){
-        await conn.rollback();
-     }finally{
-      await conn.release();
-     }
-})
-
-
-
-router.post("/register2",upload.array("myImage2",5),async (req,res,next) => {
-  const conn = await pool.getConnection();
-  conn.beginTransaction();
-  const id = req.body.id.data;
-    try{
-      console.log(id);
-       bucket.upload(req.files[0].path)
-       const file = req.files[0].filename;
-       const options = {
-           version: 'v2',
-           action: 'read',
-           expires: Date.now() + 1000 * 60 * 60
-       }
-
-       const [Url] = await bucket.file(file).getSignedUrl(options);
+//      }
+//      catch(err){
+//         await conn.rollback();
+//      }finally{
+//       await conn.release();
+//      }
+// })
 
 
-      //  const [max] = await conn.query("select max(com_id) as max from Company")
-      //  const max_x = max[0].max+1;
+
+// router.post("/register2",upload.array("myImage2",5),async (req,res,next) => {
+//   const conn = await pool.getConnection();
+//   conn.beginTransaction();
+//   const id = req.body.id.data;
+//     try{
+//       console.log(id);
+      //  bucket.upload(req.files[0].path)
+      //  const file = req.files[0].filename;
+      //  const options = {
+      //      version: 'v2',
+      //      action: 'read',
+      //      expires: Date.now() + 1000 * 60 * 60
+      //  }
+
+      //  const [Url] = await bucket.file(file).getSignedUrl(options);
+
+
+//       //  const [max] = await conn.query("select max(com_id) as max from Company")
+//       //  const max_x = max[0].max+1;
       
-       const [row] = await conn.query("update Company_infomations set image_company = ? where com_id = ? ",[Url,id] )
+//        const [row] = await conn.query("update Company_infomations set image_company = ? where com_id = ? ",[Url,id] )
 
-      await conn.commit();
-    }
-    catch(err){
-      await conn.rollback();
-    }finally{
-      await conn.release()
-    }
+//       await conn.commit();
+//     }
+//     catch(err){
+//       await conn.rollback();
+//     }finally{
+//       await conn.release()
+//     }
    
 
-})
+// })
 
 
 

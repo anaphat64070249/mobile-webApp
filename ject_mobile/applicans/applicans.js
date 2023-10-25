@@ -88,4 +88,18 @@ router.put("/end", async (req,res,nect)  => {
 })
 
 
+
+router.put("/doing", async (req,res,next) => {
+    const id = req.body.id
+    const j_id = req.body.job
+    try{
+        const [row] = await pool.query("update Job_registor set job_doing = 1 where job_id = ? and emp_id = ?",[j_id,id])
+    }
+    catch(err){
+        console.log(err);
+    }
+    
+})
+
+
 exports.router = router;

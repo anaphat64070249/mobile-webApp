@@ -110,8 +110,9 @@
                                     <label for="exampleInputPassword1" class="form-label">ประเภทบริษัท/สถานประกอบการ</label>
                                     <select name="" id="" style="width: 150%;" v-model="type_com">  
                                       <option value="ทั่วไป" selected>ทั่วไป</option>
-                                      <option value="ค้าขาย">ค้าขาย</option>
-                                      <option value="ส่งออก">ส่งออก</option>
+                                      <option value="ค้าขาย">ร้านอาหาร</option>
+                                      <option value="ส่งออก">โรงงานอุตสาหกรรม</option>
+                                      <option value="ส่งออก">สถานบันเทิง</option>
                                     </select>
                                 </div>
                               </div>
@@ -223,7 +224,8 @@
             //});
               console.log("dad",this.img1)
               formData.append("myImage",this.img1)
-              formData2.append("myImage2",this.img2)
+              formData.append("myImage",this.img2)
+              // formData2.append("myImage2",this.img2)
               
               const data = {
                 name:this.name,
@@ -240,24 +242,26 @@
                 type:this.type_com
               }
 
-
-              const data1 = {
-                email:this.email,
-                phone:this.phone,
-                password:this.password
-              }
-
-              formData.append("data",data)
-              console.log(formData,"Form")
+              formData.append("name",this.name)
+              formData.append("tel",this.tel)
+              formData.append("email",this.email)
+              formData.append("pass",this.password)
+              formData.append("address",this.address)
+              formData.append("province",this.provi)
+              formData.append("amphur",this.amphu)
+              formData.append("tambon",this.tam)
+              formData.append("code",this.code)
+              formData.append("about",this.about)
+              formData.append("num",this.num)
+              formData.append("type",this.type_com)
               
             //const send = axios.post("http://localhost:3000/register", formData)
 
             //const send2 = axios.post("http://localhost:3000/register2", formData2)
 
-            const send3 =  axios.post("http://localhost:3000/register3", {data:data}).then( async (respone) => {
-              await axios.post("http://localhost:3000/register", {formData,id:respone.data})
-              await axios.post("http://localhost:3000/register2", {formData2,id:respone.data})
-            })
+            // const send3 =  axios.post("http://localhost:3000/register3", {data:data})
+
+            const send3 =  axios.post("http://localhost:3000/register3",formData)
           }
           
           
