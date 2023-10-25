@@ -1,0 +1,38 @@
+const express = require('express')
+const app = express()
+const cors = require('cors')
+
+app.use(express.static('static'))
+app.use(express.json()) // for parsing application/json
+app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
+app.use(cors())
+const login = require('./login/login')
+const main = require('./main/getWork')
+const profile = require("./profile/profile")
+const applicans = require("./applicans/applicans")
+const detailList = require("./detaillistwork/detailList")
+const workEnd = require("./workEnd/workEnd")
+const review = require("./review/getreview")
+const peopleEnd = require("./workEnd/peopleEnd")
+const addReview = require("./review/addReview")
+const addWork = require("./addwork/addwork")
+const register = require("./register/regis")
+const dashboard = require("./dashboard/dashboard")
+const table = require("./gettable/gettable")
+
+app.use(login.router)
+app.use(main.router)
+app.use(profile.router)
+app.use(applicans.router)
+app.use(detailList.router)
+app.use(workEnd.router)
+app.use(review.router)
+app.use(peopleEnd.router)
+app.use(addReview.router)
+app.use(addWork.router)
+app.use(register.router)
+app.use(dashboard.router)
+app.use(table.router)
+
+app.listen(3000, () => {})
