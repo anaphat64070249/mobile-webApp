@@ -9,7 +9,7 @@ router.post("/peend", async (req,res,next) => {
 
     try{
         const [row,fields] = await pool.query("select * from Job_registor join Personal_infomations using (emp_id) where job_id = ?",[id])
-
+        
         console.log(row);
         res.json({people:row})
     }

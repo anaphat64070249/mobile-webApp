@@ -28,8 +28,8 @@
                     <div>
                         <label for="" v-if="check == 1 || check == 2">ค้นหาสมาชิก</label>
                         <label for="" v-else>ค้นหาผู้สมัคร</label>
-                        <input type="text">
-                        <button class="but">ค้นหา</button>
+                        <input type="text" v-model="find">
+                        <button class="but" @click="seach()">ค้นหา</button>
                     </div>
                 </div>
 
@@ -88,10 +88,19 @@
         el: "#app",
         data: {
             check:'',
-            data:[]
+            data:[],
+            find:''
         },
         methods: {
-
+            seach(){
+                if (this.find.trim() === "") {
+                    // ไม่มีค่าค้นหา ให้แสดงทั้งหมด
+                    return;
+                }
+        
+                // ใช้ filter เพื่อค้นหา item ที่ตรงกับค้นหา
+                this.data = this.data.filter(item => item.com_id.includes(this.find));
+            }
 
 
         },

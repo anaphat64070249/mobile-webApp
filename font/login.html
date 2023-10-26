@@ -121,8 +121,8 @@
                 pass:this.password
               };
 
-              const item = await axios.post("http://localhost:3000/test",dataa);
-              this.test = item.data.check;
+              const item =await  axios.post("http://localhost:3000/test",dataa);
+              this.test =  item.data.check;
               this.id = item.data.row.com_id;
               
               console.log(this.id)
@@ -134,10 +134,10 @@
                 //setlocalstorage
                 localStorage.setItem("id",this.id);
               }
-              else{
+              else if (this.test == "0"){
                 alert("กรอกชื่อผู้ใช้ หรือ รหัสผ่านผิดพลาด")
               }
-
+              
                 
             }
         },

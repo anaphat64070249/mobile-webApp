@@ -10,13 +10,12 @@ router.post("/test", async (req,res,next) => {
     try{
 
         const [row,field] = await pool.query("Select * from Company where email = ? and password = ? and user_status = 1",[email,pass]);
-        console.log("pass");
         console.log(row.length);
         if (row.length != 0){
         res.json({check:"1",row:row[0]})
         console.log("1");
         }
-        else{
+        else if (row.length == 0){
             res.json({check:"0"})
             console.log("0");
         }

@@ -29,32 +29,20 @@
         <form>
 
             <div class="form-row">
-              <div class="form-group col-md-4">
-                <label for="inputEmail4">ประเภทงาน</label>
-                <select name="" id="" class="form-control" v-model="type">
-                    <option value="ร้านอาหาร">ร้านอาหาร"</option>
-                    <option value="โรงงานอุตสาหกรรม">โรงงานอุตสาหกรรม</option>
-                    <option value="สถานบริการ">สถานบริการ</option>
-                    <option value="สถานบันเทิง">สถานบันเทิง</option>
-                    <option value="โรงงานผลิตสิ่งทอผ้า">โรงงานผลิตสิ่งทอผ้า</option>
-                    <option value="โรงเรียน/สถานศึกษา">โรงเรียน/สถานศึกษา</option>
-                    <option value="งานขนส่งสินค้า">งานขนส่งสินค้า</option>
-                    <option value="งานตามขอบเขต">งานตามขอบเขต</option>
-                </select>
-              </div>
+        
               <div class="form-group col-md-4">
                 <label for="inputPassword4">ตำแหน่งงาน</label>
                 <select name="" id="" class="form-control" v-model="position">
                     <option value="คนขายหน้าร้าน">คนขายหน้าร้าน</option>
                     <option value="วาดรูป">วาดรูป</option>
-                    <option value="บลาๆ">ระบายสี</option>
+                    <option value="ระบายสี">ระบายสี</option>
                 </select>
               </div>
               <div class="form-group col-md-4">
                 <label for="inputPassword4">การรับสมัคร</label>
                 <select name="" id="" class="form-control" v-model="apply_type">
                     <option value="1">รับเลย</option>
-                    <option value="0">พิจารณารายบุลคล</option>
+                    <option value="2">พิจารณารายบุลคล</option>
                 </select>
               </div>
             </div>
@@ -206,7 +194,6 @@
 
             const data = {
               id:this.id,
-              type:this.type,
               position:this.position,
               apply_type:this.apply_type,
               pay:this.pay,
@@ -225,7 +212,7 @@
             
             
 
-            if (this.type == '' || this.position == "" || this.apply_type == '' || this.pay == '' ||
+            if ( this.position == "" || this.apply_type == '' || this.pay == '' ||
              this.hours == '' || this.date_start == '' || this.date_end == '' || this.time_start == '' ||
              this.time_end == '' || this.amount == '' || this.contact == '' || this.boundary == '' || this.detail == ''){
                   alert("ข้อมูลผิดพลาด")

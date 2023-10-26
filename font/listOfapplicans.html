@@ -71,16 +71,19 @@
                     <h5>คะแนนเฉลี่ย: {{items.avg_score}} คะแนน</h5>
                 </div>
                 <div style="align-items: center; justify-content:center; margin-top:15px">
-                   <a :href="'./detailListwork.html?per_id='+items.personal_infoID"> <img :src="items.image_profile" alt="" width="200px" height="170px" style="border-radius: 200px;"></a>
+                   <a :href="'./detailListwork.html?per_id='+items.personal_infoID"><h4 style="margin-left: 20px; color:green" v-if="(items.com_confirm == 1 && items.emp_confirm == 1 )">รับเข้าทำงานแล้ว</h4>
+                    <h4 style="margin-left: 50px; color:rgb(97, 97, 21)" v-if="(items.com_confirm == 1  && items.emp_confirm == 0 && items.cancel_status == 0)">รอยืนยัน</h4>
+                    <h4 style="margin-left: 50px; color:rgb(247, 15, 15)" v-if="(items.cancel_status == 1)">ถูกปฏิเสธ</h4>
+                    <img :src="items.image_profile" alt="" width="200px" height="170px" style="border-radius: 200px;"></a>
                     <div style="margin-top: 10px; padding:10px; margin-left:30px" v-if="items.com_confirm == 0 && items.cancel_status == 0 ">
                         <button style="background-color: green; color:aliceblue" @click="confirm(items.personal_infoID,items.job_id)">ยืนยัน</button>
                         <button style="background-color: red; color:aliceblue" @click="cancel(items.personal_infoID,items.job_id)">ปฏิเสธ</button>
                     </div>
                     <!-- v-if="items.com_confirm == 0 && items.cancel_status == 0" -->
-                    <div v-if=" (items.com_confirm == 1 )" style="margin-top: 10px; padding:10px; margin-left:20px; color:green;">
+                    <div v-if=" (items.com_confirm == 1 && items.emp_confirm == 1 && items.job_doing == 0)" style="margin-top: 10px; padding:10px; margin-left:20px; color:green;">
                         <button style="background-color: blueviolet; color:aliceblue;  margin-left:40px" @click="start(items.personal_infoID,items.job_id)">เริ่มงาน</button>
-                        <h4 style="margin-left: 15px;"  v-if="pas == 1">เริ่มงานแล้ว</h4>
                     </div>
+                    <h4 style="margin-left: 30px; "  v-if="pas == 1">เริ่มงานแล้ว</h4>
 
                 </div>
             </div>
@@ -173,7 +176,6 @@
             },
              confirm(aaaa,bbbb){
                 alert("ยืนยันสำเร็จ")
-
                 this.check_click = 1;
                 const con =  axios.put("http://localhost:3000/confirm",{a:aaaa,b:bbbb});
                 window.location.href="http://127.0.0.1:5500/font/main.html"
