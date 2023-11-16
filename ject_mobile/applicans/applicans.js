@@ -24,10 +24,11 @@ router.put("/confirm", async (req,res,next) => {
     conn.beginTransaction()
     const emp_id = req.body.a;
     const job_id  =req.body.b;
+    console.log(emp_id,job_id);
     try{
         const [row,field] = await conn.query("update Job_registor set com_confirm = 1,date_com_confirm = CURRENT_TIMESTAMP where emp_id =? and job_id = ?",[emp_id,job_id] )
         const [row1,fields1] = await conn.query("insert into Message(emp_id,message_daySend,job_id) values(?,CURRENT_TIMESTAMP,?)", [emp_id,job_id])
-
+        console.log(row);
         conn.commit()
     }catch(err){
         conn.rollback()

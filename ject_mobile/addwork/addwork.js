@@ -25,7 +25,7 @@ router.post("/addwork", async (req, res, next) => {
         const [row, fields] = await pool.query(
             "insert into Jobs(com_id,position,job_scope,job_infomation,job_date_declear,day_start,day_end,time_start,time_end,working_hours,day_work,pay,status,emp_amount,apply_type,manager_name) values (?,?,?,?,CURRENT_TIMESTAMP,?,?,?,?,?,DATEDIFF(?,?),?,1,?,?,?)",
             [
-                id,position,boundary,detail,date_start,date_end,time_start,time_end,hours,date_start,date_end,pay,amount,apply_type,name
+                id,position,boundary,detail,date_start,date_end,time_start,time_end,hours,date_end,date_start,pay,amount,apply_type,name
             ]
         );
 

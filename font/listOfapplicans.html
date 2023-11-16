@@ -31,7 +31,7 @@
             <div>
                 <div  style=" margin-top:20px; width:100%; margin-left:200% ">
                     
-                    <div >
+                    <div>
                         <img :src="work.image_juristic" alt="" style="margin-left: -10%;" width="200px" height="200px">
                         <h4>{{work.position}}</h4>
                     </div>
@@ -76,12 +76,12 @@
                     <h4 style="margin-left: 50px; color:rgb(247, 15, 15)" v-if="(items.cancel_status == 1)">ถูกปฏิเสธ</h4>
                     <img :src="items.image_profile" alt="" width="200px" height="170px" style="border-radius: 200px;"></a>
                     <div style="margin-top: 10px; padding:10px; margin-left:30px" v-if="items.com_confirm == 0 && items.cancel_status == 0 ">
-                        <button style="background-color: green; color:aliceblue" @click="confirm(items.personal_infoID,items.job_id)">ยืนยัน</button>
-                        <button style="background-color: red; color:aliceblue" @click="cancel(items.personal_infoID,items.job_id)">ปฏิเสธ</button>
+                        <button style="background-color: green; color:aliceblue" @click="confirm(items.emp_id,items.job_id)">ยืนยัน</button>
+                        <button style="background-color: red; color:aliceblue" @click="cancel(items.emp_id,items.job_id)">ปฏิเสธ</button>
                     </div>
                     <!-- v-if="items.com_confirm == 0 && items.cancel_status == 0" -->
                     <div v-if=" (items.com_confirm == 1 && items.emp_confirm == 1 && items.job_doing == 0)" style="margin-top: 10px; padding:10px; margin-left:20px; color:green;">
-                        <button style="background-color: blueviolet; color:aliceblue;  margin-left:40px" @click="start(items.personal_infoID,items.job_id)">เริ่มงาน</button>
+                        <button style="background-color: blueviolet; color:aliceblue;  margin-left:40px" @click="start(items.emp_id,items.job_id)">เริ่มงาน</button>
                     </div>
                     <h4 style="margin-left: 30px; "  v-if="pas == 1">เริ่มงานแล้ว</h4>
 
